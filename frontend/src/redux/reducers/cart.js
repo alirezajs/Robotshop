@@ -1,4 +1,4 @@
-import { getProduct } from './products';
+import { getProduct } from './productReducer';
 
 // actions
 const CART_ADD   = 'cart/ADD';
@@ -10,7 +10,7 @@ const initialState = {
     currency: '฿'
 };
 
-export default function cart(state = initialState, action = {}) {
+export default function cartReducer(state = initialState, action = {}) {
     switch (action.type) {
         case CART_ADD:
             return handleCartAdd(state, action.payload);
@@ -56,11 +56,11 @@ export function removeFromCart(productId) {
 
 // selectors
 export function isInCart(state, props) {
-    return state.cart.items.indexOf(props.id) !== -1;
+    return state.cart.items.indexOf(props.name) !== -1;
 }
 
 export function getItems(state, props) {
-    return state.cart.items.map(id => getProduct(state, { id }));
+    return state.cart.items.map(name => getProduct(state, { name }));
 }
 
 export function getCurrency(state, props) {
@@ -68,8 +68,8 @@ export function getCurrency(state, props) {
 }
 
 export function getTotal(state, props) {
-    return state.cart.items.reduce((acc, id) => {
-        const item = getProduct(state, { id });
-        return acc + item.price;
+    return state.cart.items.reduce((acc, name) => {
+        const item = getProduct(state, { name });
+        return acc + +item.price;
     }, 0);
 }

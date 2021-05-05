@@ -1,16 +1,15 @@
-import { connect } from 'react-redux';
-import Product from '../components/Product';
-import { addToCart, removeFromCart, isInCart } from '../ducks/cart';
-
+import { connect } from "react-redux";
+import Product from "../components/Product";
+import { addToCart, removeFromCart, isInCart } from "../redux/reducers/cart";
 const mapStateToProps = (state, props) => {
-    return {
-        isInCart: isInCart(state, props)
-    }
-}
+  return {
+    isInCart: isInCart(state, props),
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
-    addToCart: (id) => dispatch(addToCart(id)),
-    removeFromCart: (id) => dispatch(removeFromCart(id))
-})
+  addToCart: (name) => dispatch(addToCart(name)),
+  removeFromCart: (name) => dispatch(removeFromCart(name)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

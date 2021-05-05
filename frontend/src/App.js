@@ -2,8 +2,7 @@ import React from "react";
 import Cart from "./containers/Cart";
 import ProductList from "./containers/ProductList";
 import { Container, Row, Col } from "react-bootstrap";
-import  Header  from "./components/layout/Header";
-import  Footer  from "./components/layout/Footer";
+import { Header, Footer } from "./components/Layout";
 
 const App = () => {
   return (

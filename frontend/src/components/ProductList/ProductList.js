@@ -1,23 +1,50 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Product from '../../containers/Product';
+import React from "react";
+import PropTypes from "prop-types";
+import Product from "../../containers/Product";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
-const ProductList = ({ products }) => {
+class ProductList extends React.Component {
+  constructor() {
+    super();
+
+    this.shouldComponentRender = this.shouldComponentRender.bind(this);
+  }
+
+  componentWillMount() {
+    const { fetchProducts } = this.props;
+    fetchProducts();
+  }
+
+  shouldComponentRender() {
+    const { pending } = this.props;
+    if (pending) return false;
+    return true;
+  }
+
+  render() {
+    const { error, pending, products } = this.props;
+    if (!this.shouldComponentRender()) return <LoadingSpinner />;
     return (
-        <div>
-            <ul className="product-list">
-              {products.map(product => (
-                  <li key={product.id} className="product-list__item">
-                    <Product {...product} />
-                  </li>
-              ))}
-            </ul>
-        </div>
+      <div>
+        {error && <span className="product-list-error">{error}</span>}
+        <ul className="product-list">
+          {products &&
+            products.length &&
+            products.map((product, index) => (
+              <li key={index} className="product-list__item">
+                <Product {...product} />
+              </li>
+            ))}
+        </ul>
+      </div>
     );
+  }
 }
 
 ProductList.propTypes = {
-    products: PropTypes.array,
-}
+  products: PropTypes.array,
+  error: PropTypes.bool,
+  pending:PropTypes.bool
+};
 
 export default ProductList;
