@@ -5,56 +5,46 @@ import Moment from "moment";
 
 class Product extends Component {
   handleClick = () => {
-    const { name, addToCart, removeFromCart, isInCart } = this.props;
-
-    if (isInCart) {
-      removeFromCart(name);
+    const { name, price, stock, addToCart, decreaseStock } = this.props;
+    if (stock > 0) {
+      addToCart({ name, price, stock });
+      decreaseStock({ name});
     } else {
-      addToCart(name);
+      alert("there is no stock");
     }
   };
 
   render() {
     Moment.locale("en");
-    const {
-      name,
-      price,
-      image,
-      material,
-      isInCart,
-      stock,
-      createdAt,
-    } = this.props;
+    const { name, price, image, material, stock, createdAt } = this.props;
     return (
       <Card>
         <Card.Img variant="top" src={image} alt="product" />
 
         <Card.Body>
           <Card.Title>{name}</Card.Title>
-          <Card.Text>
-            <h6>
-              <strong> Material: </strong>
-              {material}
-            </h6>
-            <div>
-              <strong>Stock: </strong>
-              {stock}
-            </div>
-            <span>
-              <strong>Create Date:</strong>
-              {Moment(createdAt).format("DD-MM-YYYY")}
-            </span>
-          </Card.Text>
+          <h6>
+            <strong> Material: </strong>
+            {material}
+          </h6>
+          <div>
+            <strong>Stock: </strong>
+            {stock}
+          </div>
+          <div>
+            <strong>Create Date:</strong>
+            {Moment(createdAt).format("DD-MM-YYYY")}
+          </div>
           <div className="product__price">
             <h6 className="mb-0 font-weight-semibold">฿{price} </h6>
           </div>
           <Card.Footer className="bg-white text-center">
             <button
-              disabled={ stock === 0}
-              className={isInCart ? "btn btn-danger" : "btn btn-primary"}
+              disabled={stock === 0}
+              className={stock ? "btn btn-danger" : "btn btn-primary"}
               onClick={this.handleClick}
             >
-              {isInCart ? "Remove" : "Add to cart"}
+              Add to cart
             </button>
           </Card.Footer>
         </Card.Body>
@@ -68,9 +58,6 @@ Product.propTypes = {
   price: PropTypes.string,
   image: PropTypes.string,
   material: PropTypes.string,
-  isInCart: PropTypes.bool.isRequired,
-  addToCart: PropTypes.func.isRequired,
-  removeFromCart: PropTypes.func.isRequired,
 };
 
 export default Product;

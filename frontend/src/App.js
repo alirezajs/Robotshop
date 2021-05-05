@@ -8,7 +8,7 @@ const App = () => {
   return (
     <Container fluid>
       <Header></Header>
-      <Container className="py-3">
+      <Container fluid className="py-3">
         <Row>
           <Col xs={12}>
             <h1>Robot Shop</h1>

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Cart from '../components/Cart';
-import { getItems, getCurrency, getTotal, removeFromCart } from '../redux/reducers/cart';
-
+import { getItems, getCurrency, getTotal } from '../redux/reducers/cartReducer';
+import { removeFromCart } from  "../redux/actions/cardActions";
 const mapStateToProps = (state, props) => {
     return {
         items: getItems(state, props),

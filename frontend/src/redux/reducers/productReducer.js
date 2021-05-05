@@ -2,6 +2,8 @@ import {
   FETCH_PRODUCTS_PENDING,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_ERROR,
+  DECREASE_STOCK,
+  INCREASE_STOCK,
 } from "../actions/productActions";
 
 const initialState = {
@@ -32,14 +34,45 @@ export default function productsReducer(state = initialState, action) {
         error: action.error.error,
         products: [],
       };
+
+    case DECREASE_STOCK:
+      return handleDecreaseStock(state, action.payload);
+    case INCREASE_STOCK: {
+      return handleIncreaseStock(state, action.payload);
+    }
     default:
       return state;
   }
 }
 
+function handleDecreaseStock(state,payload){
+  state.products.map((item, key) => {
+    if (item.name === payload.name) {
+      state.products[key].stock--;
+    }
+  });
+  return {
+    ...state,
+    products: state.products
+  }
+}
+
+function handleIncreaseStock(state,payload){
+  state.products.map((item, key) => {
+    if (item.name === payload.name) {
+      state.products[key].stock++;
+    }
+  });
+  return {
+    ...state,
+    products: state.products
+  }
+}
+
 // selectors
 export const getProducts = (state) => state.products.products;
-export const getProduct = (state, props) =>
-  state.products.products.find((item) => item.name === props.name);
+export const getProduct = (state, props) => {
+  return state.products.products.find((item) => item.name === props.name);
+};
 export const getProductsPending = (state) => state.products.pending;
 export const getProductsError = (state) => state.products.error;

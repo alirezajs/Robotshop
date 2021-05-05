@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CartItem from './CartItem';
 
 const Cart = ({ items, total, currency, removeFromCart }) => {
+    console.log(items)
     return (
         <div>
             <h3>Shopping Cart</h3>
