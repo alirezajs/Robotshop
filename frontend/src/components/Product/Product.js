@@ -8,7 +8,7 @@ class Product extends Component {
     const { name, price, stock, addToCart, decreaseStock } = this.props;
     if (stock > 0) {
       addToCart({ name, price, stock });
-      decreaseStock({ name});
+      decreaseStock({ name });
     } else {
       alert("there is no stock");
     }
@@ -16,7 +16,15 @@ class Product extends Component {
 
   render() {
     Moment.locale("en");
-    const { name, price, image, material, stock, createdAt } = this.props;
+    const {
+      name,
+      price,
+      image,
+      material,
+      stock,
+      createdAt,
+      getStock,
+    } = this.props;
     return (
       <Card>
         <Card.Img variant="top" src={image} alt="product" />
@@ -29,7 +37,7 @@ class Product extends Component {
           </h6>
           <div>
             <strong>Stock: </strong>
-            {stock}
+            {getStock}
           </div>
           <div>
             <strong>Create Date:</strong>
@@ -40,8 +48,8 @@ class Product extends Component {
           </div>
           <Card.Footer className="bg-white text-center">
             <button
-              disabled={stock === 0}
-              className={stock ? "btn btn-danger" : "btn btn-primary"}
+              disabled={getStock === 0}
+              className="btn btn-success"
               onClick={this.handleClick}
             >
               Add to cart

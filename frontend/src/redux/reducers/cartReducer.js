@@ -23,49 +23,40 @@ export default function cartReducer(state = initialState, action = {}) {
 }
 
 function handleCartAdd(state, payload) {
-  let check = false;
-  state.items.map((item, key) => {
-    if (item.name === payload.name) {
-      state.items[key].quantity++;
-      check = true;
-    }
-  });
-  if (!check) {
-    let _cart = {
-      quantity: 1,
-      name: payload.name,
-      price: payload.price,
-    };
-    state.items.push(_cart);
-  }
+  let _cart = {
+    name: payload.name,
+    price: payload.price,
+  };
+  state.items.push(_cart);
   return {
     ...state,
-    items: [...state.items],
+    items: state.items,
   };
 }
 
 function handleCartRemove(state, payload) {
+  state.items.splice(payload, 1);
   return {
     ...state,
-    items: state.items.filter((id) => id !== payload.productId),
+    items: state.items,
   };
 }
 
 // action creators
-export function addToCart(productId) {
+export function addToCart(productName) {
   return {
     type: CART_ADD,
     payload: {
-      productId,
+      productName,
     },
   };
 }
 
-export function removeFromCart(productId) {
+export function removeFromCart(productName) {
   return {
     type: CART_REMOVE,
     payload: {
-      productId,
+      productName,
     },
   };
 }
@@ -86,6 +77,7 @@ export function getCurrency(state, props) {
 export function getTotal(state, props) {
   return state.cart.items.reduce((acc, product) => {
     const item = getProduct(state, product);
-    return acc + +item.price;
+    var result = parseFloat(acc) + parseFloat(+item.price);
+    return +result.toFixed(2);
   }, 0);
 }
