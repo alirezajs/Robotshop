@@ -22,7 +22,7 @@ class ProductList extends React.Component {
   }
 
   render() {
-    const { error, pending, products } = this.props;
+    const { error, products } = this.props;
     if (!this.shouldComponentRender()) return <LoadingSpinner />;
     return (
       <div>
@@ -44,7 +44,8 @@ class ProductList extends React.Component {
 ProductList.propTypes = {
   products: PropTypes.array,
   error: PropTypes.bool,
-  pending:PropTypes.bool
+  pending: PropTypes.bool,
+  fetchProducts: PropTypes.func.isRequired,
 };
 
 export default ProductList;

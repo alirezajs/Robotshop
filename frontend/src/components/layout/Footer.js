@@ -5,7 +5,7 @@ class Footer extends Component {
     return (
       <Row noGutters>
         <Col>
-          <footer className="footer p-3 bg-light">
+          <footer className="footer p-3 bg-light navbar fixed-bottom">
             <small>
               made by
               <a href="https://www.linkedin.com/in/alireza-varmaghani/">

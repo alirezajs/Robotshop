@@ -1,0 +1,10 @@
+.customize .rc-loading-mask{
+    background-color: rgb(236, 236, 236);
+    height: 70vh;
+}
+
+.customize .rc-loading-icon-default {
+    border-color: transparent #000 #000 #000;
+    width: 30px;
+    height: 30px;
+}

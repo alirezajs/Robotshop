@@ -4,11 +4,15 @@ import { Card } from "react-bootstrap";
 import Moment from "moment";
 
 class Product extends Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   handleClick = () => {
-    const { name, price, stock, addToCart, decreaseStock } = this.props;
+    const { name, price, stock, addToCart } = this.props;
     if (stock > 0) {
       addToCart({ name, price, stock });
-      decreaseStock({ name });
     } else {
       alert("there is no stock");
     }
@@ -16,15 +20,7 @@ class Product extends Component {
 
   render() {
     Moment.locale("en");
-    const {
-      name,
-      price,
-      image,
-      material,
-      stock,
-      createdAt,
-      getStock,
-    } = this.props;
+    const { name, price, image, material, createdAt, getStock } = this.props;
     return (
       <Card>
         <Card.Img variant="top" src={image} alt="product" />
@@ -63,9 +59,13 @@ class Product extends Component {
 
 Product.propTypes = {
   name: PropTypes.string.isRequired,
-  price: PropTypes.string,
-  image: PropTypes.string,
-  material: PropTypes.string,
+  price: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  stock: PropTypes.number.isRequired,
+  material: PropTypes.string.isRequired,
+  addToCart: PropTypes.func.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  getStock: PropTypes.number.isRequired,
 };
 
 export default Product;

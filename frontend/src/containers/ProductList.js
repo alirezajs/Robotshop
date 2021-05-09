@@ -6,7 +6,7 @@ import {
   getProductsError,
   getProducts,
   getProductsPending,
-} from "../redux/reducers/productReducer";
+} from "../redux/selectors/productSelectors";
 import fetchProductsAction from "../fetches/fetchProducts";
 
 const mapStateToProps = (state, props) => ({

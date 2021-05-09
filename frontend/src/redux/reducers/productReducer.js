@@ -59,8 +59,12 @@ function handleDecreaseStock(state, payload) {
 
 function handleIncreaseStock(state, payload) {
   state.products.map((item, key) => {
-    if (item.name === payload.name) {
-      state.products[key].stock++;
+    if (item.name === payload.item.name) {
+      if (payload.completely) {
+        state.products[key].stock = payload.item.stock;
+      } else {
+        state.products[key].stock++;
+      }
     }
   });
   return {
@@ -69,20 +73,4 @@ function handleIncreaseStock(state, payload) {
   };
 }
 
-// selectors
-export const getProducts = (state) => state.products.products;
-export const getProduct = (state, props) => {
-  return state.products.products.find((item) => item.name === props.name);
-};
-export const getProductsPending = (state) => state.products.pending;
-export const getProductsError = (state) => state.products.error;
 
-export const getStock = (state, props) => {
-  const product = state.products.products.find(
-    (item) => item.name === props.name
-  );
-  if (product) {
-    return product.stock;
-  }
-  return null;
-};

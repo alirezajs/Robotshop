@@ -1,21 +1,25 @@
 import { connect } from "react-redux";
 import Product from "../components/Product";
-import { isInCart } from "../redux/reducers/cartReducer";
-import { addToCart, removeFromCart } from "../redux/actions/cardActions";
+import { addToCart} from "../redux/actions/cardActions";
 import { decreaseStock } from "../redux/actions/productActions";
-import { getStock } from "../redux/reducers/productReducer";
+import { getStock } from "../redux/selectors/productSelectors";
 
 const mapStateToProps = (state, props) => {
   return {
-    isInCart: isInCart(state, props),
     getStock: getStock(state, props),
   };
 };
 
+function addCardCombineDispatch(product) {
+  return dispatch => {
+      dispatch(addToCart(product))
+      dispatch(decreaseStock(product))
+  }
+}
+
 const mapDispatchToProps = (dispatch) => ({
-  addToCart: (name) => dispatch(addToCart(name)),
-  removeFromCart: (name) => dispatch(removeFromCart(name)),
-  decreaseStock: (name) => dispatch(decreaseStock(name)),
+  addToCart: (product) => dispatch(addCardCombineDispatch(product))
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
